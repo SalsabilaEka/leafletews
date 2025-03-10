@@ -1,0 +1,14 @@
+/* Pastikan mapId mengambil seluruh layar di bawah header */
+#mapId {
+  position: absolute;
+  top: 56px; /* Tinggi dari ion-header, sesuaikan jika header lebih besar */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% - 56px); /* Kurangi tinggi header dari tinggi penuh */
+}
+
+/* Pastikan kontrol Leaflet seperti zoom in/out muncul di atas */
+.leaflet-control-container {
+  z-index: 1000; /* Pastikan kontrol berada di lapisan atas */
+}
