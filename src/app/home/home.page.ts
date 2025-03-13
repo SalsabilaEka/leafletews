@@ -40,7 +40,7 @@ export class HomePage {
   ngOnInit() {}
 
   ionViewDidEnter() {
-    this.map = L.map('mapId').setView([7.6574714, 110.395469], 10);
+    this.map = L.map('mapId').setView([-7.6829218, 110.388321], 10);
 
     this.osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
