@@ -20,6 +20,16 @@ const offIcon = L.icon({
   shadowSize: [41, 41]
 });
 
+const bunkerIcon = L.icon({
+  iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@1.0/img/marker-icon-blue.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+
 
 @Component({
   selector: 'app-home',
@@ -99,15 +109,17 @@ export class HomePage {
           if (!isNaN(lat) && !isNaN(lng)) {
             let icon = offIcon; // Default ke offIcon
 
-            if (item.Kondisi === 'Hidup') {
-                icon = onIcon;
+            if (layerName === 'BUNKER') {
+              icon = bunkerIcon;
+            } else if (item.Kondisi === 'Hidup') {
+              icon = onIcon;
             }
 
             const marker = L.marker([lat, lng], { icon });
             const popupContent = this.getPopupContent(layerName, item);
             marker.bindPopup(popupContent);
             marker.addTo(this.markerLayers[layerName]);
-        }
+          }
         });
       },
       (error) => {
@@ -115,6 +127,7 @@ export class HomePage {
       }
     );
   }
+
 
   formatDate(dateString: string): string {
     const options: Intl.DateTimeFormatOptions = {
@@ -134,12 +147,19 @@ export class HomePage {
       case 'EWS':
         return `
           <strong>Nama EWS: </strong> ${item['Nama']}<br>
+          <strong>Penjaga: </strong>${item['Penjaga']}<br>
           <strong>Status: </strong>${item['Kondisi']}<br>
         `;
       case 'CCTV':
         return `
           <strong>Nama CCTV: </strong> ${item['Nama']}<br>
+          <strong>Penjaga: </strong>${item['Penjaga']}<br>
           <strong>Status: </strong>${item['Kondisi']}<br>
+        `;
+      case 'BUNKER':
+        return `
+          <strong>Nama Bunker: </strong> ${item['Nama']}<br>
+          <strong>Penjaga: </strong>${item['Penjaga']}<br>
         `;
       default:
         return '<strong>Data tidak tersedia</strong>';
@@ -150,7 +170,7 @@ export class HomePage {
     const apiData = [
       { url: 'https://script.google.com/macros/s/AKfycbwyc185bvi-aM5x8fXkHkun7B_v6uAMUUw0-KZdCzprpmH8jF5Zwd3sQuMG-UUG0BUexQ/exec', name: 'EWS' },
       { url: 'https://script.google.com/macros/s/AKfycbwwcjhjSyuEW_6ng4lgAcW3qwxQ2eQWKQUwsCdgXWdhSTdgQgmbfOoQGWlRmsUfDVN8JQ/exec', name: 'CCTV' },
-
+      { url: 'https://script.google.com/macros/s/AKfycbweC5QUOSNl3O59EAOTEMUaLImsa1rEQIq_QdZITJ0u6j9VsGIuCb-bYedqqZNX8AzG/exec', name: 'BUNKER' },
     ];
 
     const CustomControl = L.Control.extend({
